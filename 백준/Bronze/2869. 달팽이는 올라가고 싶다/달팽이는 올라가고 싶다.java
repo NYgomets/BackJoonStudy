@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.*;
 import java.util.*;
 
@@ -10,7 +11,11 @@ public class Main {
         int b = Integer.parseInt(st.nextToken());
         int v = Integer.parseInt(st.nextToken());
 
-        int day = (v - b -1) / (a - b) + 1;
+        int day = (v - b) / (a - b);
+
+        if ((v - b) % (a - b) != 0) {
+            day++;
+        }
 
         System.out.println(day);
     }
