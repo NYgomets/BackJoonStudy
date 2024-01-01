@@ -1,40 +1,29 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        Scanner s = new Scanner(System.in);
-
-        int n = s.nextInt();
-        int m = s.nextInt();
-
-        int x = 0;
-
-        if (n <= m) {
-            int count = 1;
-
-            for (int i=count; i<=n; i++) {
-                if (n%i == 0 && m%i == 0) {
-                    count = i;
-                }
-            }
-
-            x = count;
-        } else {
-            int count = 1;
-
-            for (int i=count; i<=m; i++) {
-                if (n%i == 0 && m%i == 0) {
-                    count = i;
-                }
-            }
-
-            x = count;
+    public static int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
         }
+        return a;
+    }
 
-        System.out.println(x);
-        System.out.println(n/x * m/x * x);
+    public static int lcm(int a, int b) {
+        return (a * b) / gcd(a, b);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt();
+        int m = scanner.nextInt();
+
+        int gcdValue = gcd(n, m);
+        int lcmValue = lcm(n, m);
+
+        System.out.println(gcdValue);
+        System.out.println(lcmValue);
     }
 }
