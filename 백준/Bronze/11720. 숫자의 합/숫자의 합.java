@@ -1,21 +1,21 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-       Scanner s = new Scanner(System.in);
+        Scanner s = new Scanner(System.in);
 
-       int n = s.nextInt();
-       String a = s.next();
+        int Num = s.nextInt();
+        String sNum = s.next();
+        char[] charArray = sNum.toCharArray();
 
-       int sum=0;
+        int sum = 0;
 
-       for (int i=0; i<n; i++) {
-           sum += a.charAt(i) - '0';
-       }
+        for (int i=0; i<charArray.length; i++) {
+            int check = charArray[i] - 48;
+            sum += check;
+        }
 
-       System.out.println(sum);
+        System.out.println(sum);
     }
 }
