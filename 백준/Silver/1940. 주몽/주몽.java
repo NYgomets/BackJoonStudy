@@ -31,6 +31,7 @@ public class Main {
             } else {
                 count++;
                 start_index++;
+                end_index--;
             }
         }
 
