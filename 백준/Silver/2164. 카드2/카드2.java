@@ -6,28 +6,17 @@ public class Main {
         Scanner s = new Scanner(System.in);
 
         int N = s.nextInt();
-        Queue<Integer> queue = new ArrayDeque<>();
-
-        if (N == 1) {
-            System.out.println(1);
-            return;
-        }
+        Queue<Integer> queue = new LinkedList<>();
 
         for (int i=1; i<=N; i++) {
             queue.add(i);
         }
 
-        int change = 0;
-
-        while (true) {
+        while (queue.size() > 1) {
             queue.poll();
-            change = queue.poll();
-            if (queue.isEmpty()) {
-                break;
-            }
-            queue.add(change);
+            queue.add(queue.poll());
         }
 
-        System.out.println(change);
+        System.out.println(queue.poll());
     }
 }
