@@ -1,33 +1,30 @@
-import java.util.Scanner;
+import java.io.*;
+import java.math.BigInteger;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        int subject = scanner.nextInt();
-        int[] score = new int[subject];
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int subNum = Integer.parseInt(br.readLine());
+        String givenNum = br.readLine();
         double sum = 0;
-        double avg = 0;
+        int max = 0;
+        ArrayList<Integer> list = new ArrayList<>();
 
-        for (int i=0; i<score.length; i++) {
-            score[i] = scanner.nextInt();
-        }
-
-        int max = score[0];
-
-        for (int i =0; i<score.length; i++) {
-            if (max < score[i]) {
-                max = score[i];
+        StringTokenizer st = new StringTokenizer(givenNum);
+        while (st.hasMoreTokens()) {
+            int check = Integer.parseInt(st.nextToken());
+            list.add(check);
+            if (check > max) {
+                max = check;
             }
         }
 
-        for (int i=0; i<score.length; i++) {
-            sum += score[i] / (double)max * 100;
+        for (int i=0; i<subNum; i++) {
+            sum += (double) list.get(i)/max*100;
         }
 
-        avg = sum / subject;
-
-        System.out.println(avg);
+        System.out.println(sum/subNum);
 
     }
 }
