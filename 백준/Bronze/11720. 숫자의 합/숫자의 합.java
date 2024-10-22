@@ -1,19 +1,18 @@
 import java.io.*;
+import java.math.BigInteger;
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Scanner s = new Scanner(System.in);
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int Num = s.nextInt();
-        String sNum = s.next();
-        char[] charArray = sNum.toCharArray();
-
+        int num = Integer.parseInt(br.readLine());
+        String check = br.readLine();
         int sum = 0;
 
-        for (int i=0; i<charArray.length; i++) {
-            int check = charArray[i] - 48;
-            sum += check;
+        for (int i=0; i<num; i++) {
+            int value = Integer.parseInt(String.valueOf(check.charAt(i)));
+            sum += value;
         }
 
         System.out.println(sum);
