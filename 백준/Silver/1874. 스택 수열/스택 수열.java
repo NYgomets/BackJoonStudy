@@ -1,42 +1,45 @@
 import java.io.*;
+import java.math.BigInteger;
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Scanner s = new Scanner(System.in);
-
-        int n = s.nextInt();
-        int[] checkArr = new int[n];
-        for (int i=0; i<n; i++) {
-            checkArr[i] = s.nextInt();
-        }
-
-        Stack<Integer> stack = new Stack<>();
-        int i=0;
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int chance = Integer.parseInt(br.readLine());
         int check = 0;
+        Stack<Integer> stack = new Stack<>();
         stack.push(0);
-        Queue<String> result = new ArrayDeque<>();
+        StringBuilder result = new StringBuilder();
 
-        while (!stack.isEmpty()) {
-            if (stack.peek() < checkArr[i]) {
-                check++;
-                stack.push(check);
-                result.add("+");
-            } else if (stack.peek() == checkArr[i]) {
-                stack.pop();
-                result.add("-");
-                i++;
-                if (i == n) {
-                    break;
+        for (int i=0; i<chance; i++) {
+            int num = Integer.parseInt(br.readLine());
+
+            if (num > stack.peek()) {
+                while (num > stack.peek()) {
+                    check++;
+                    stack.push(check);
+                    result.append("+\n");
                 }
-            } else if (stack.peek() > checkArr[i]) {
-                System.out.println("NO");
-                return;
+                if (check > num) {
+                    System.out.println("NO");
+                    return;
+                }
             }
+
+            if (num < stack.peek()) {
+                while (num < stack.peek()) {
+                    result.append("-\n");
+                    stack.pop();
+                }
+            }
+
+            if (num == stack.peek()) {
+                result.append("-\n");
+                stack.pop();
+            }
+
         }
 
-        while (!result.isEmpty()) {
-            System.out.println(result.poll());
-        }
+        System.out.println(result);
     }
 }
