@@ -9,30 +9,33 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken()); // 정점의 개수
         int M = Integer.parseInt(st.nextToken()); // 간선의 개수
-        boolean[] visitedArr = new boolean[N+1]; // 방문 여부 검사
+        boolean[] visitedArr = new boolean[N + 1]; // 방문 여부 검사
 
         /**
-            인접리스트로 그래프를 표현
+         * 인접리스르로 그래프를 표현
          */
-        List<Integer>[] adjList = new LinkedList[N+1];
-        for (int i=0; i<=N; i++) {
-            adjList[i] = new LinkedList<>();
-        }
+        List<Integer>[] adjList = new ArrayList[N+1];
+       for (int i=1; i<=N; i++) {
+           adjList[i] = new ArrayList<>();
+       }
 
-        for (int i=0; i<M; i++) {
-            st = new StringTokenizer(br.readLine());
-            int u = Integer.parseInt(st.nextToken());
-            int v = Integer.parseInt(st.nextToken());
-            adjList[u].add(v);
-            adjList[v].add(u);
-        }
+       for (int i=0; i<M; i++) {
+           st = new StringTokenizer(br.readLine());
+           int u = Integer.parseInt(st.nextToken());
+           int v = Integer.parseInt(st.nextToken());
+           adjList[u].add(v);
+           adjList[v].add(u);
+       }
 
-        for (int i=1; i<=N; i++) {
-            if (!visitedArr[i]) {
-                dfs(i, adjList, visitedArr);
-                count++;
-            }
-        }
+       for (int i=1; i<=N; i++) {
+           /**
+            * 해당 노드 방문 여부 검사
+            */
+           if (!visitedArr[i]) {
+               dfs(i, adjList, visitedArr);
+               count++;
+           }
+       }
 
         System.out.println(count);
     }
