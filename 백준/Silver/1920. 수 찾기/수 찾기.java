@@ -1,33 +1,36 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Main {
-
     public static void main(String[] args) throws IOException {
-        Scanner s = new Scanner(System.in);
-
-        int n = s.nextInt();
-        int[] num = new int[Math.abs(n)];
-        for (int i=0; i<num.length; i++) {
-            num[i] = s.nextInt();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        int n = Integer.parseInt(br.readLine());
+        int[] givenN = new int[n];
+        st = new StringTokenizer(br.readLine());
+        for (int i=0; i<n; i++) {
+            givenN[i] = Integer.parseInt(st.nextToken());
         }
-        int m = s.nextInt();
-        int[] check = new int[Math.abs(m)];
-        for (int i=0; i< check.length; i++) {
-            check[i] = s.nextInt();
+        Arrays.sort(givenN);
+
+        int m  = Integer.parseInt(br.readLine());
+        int[] givenM = new int[m];
+        st = new StringTokenizer(br.readLine());
+        for (int i=0; i<m; i++) {
+            givenM[i] = Integer.parseInt(st.nextToken());
         }
-        Arrays.sort(num);
 
-        for (int i=0; i< check.length; i++) {
-            int index = Arrays.binarySearch(num, check[i]);
+        StringBuilder sb = new StringBuilder();
+        for (int i=0; i<m; i++) {
+            int check = Arrays.binarySearch(givenN, givenM[i]);
 
-            if (index>=0) {
-                System.out.println(1);
+            if (check >= 0) {
+                sb.append(1).append("\n");
             } else {
-                System.out.println(0);
+                sb.append(0).append("\n");
             }
         }
+
+        System.out.println(sb);
     }
 }
