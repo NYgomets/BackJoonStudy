@@ -1,33 +1,33 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Main {
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
 
-         int a = Integer.parseInt(st.nextToken());
-         int b = Integer.parseInt(st.nextToken());
-
-        boolean[] isPrime = new boolean[b+1];
-        Arrays.fill(isPrime, true);
-
-        isPrime[0] = isPrime[1] = false;
-
-        for (int i=2; i*i<=b; i++) {
-            if (isPrime[i]) {
-                for (int j=i*i; j<=b; j+=i) {
-                    isPrime[j] = false;
-                }
-            }
+        int[] arr = new int[m+1];
+        for (int i=2; i<=m; i++) {
+            arr[i] = i;
         }
 
-        for (int i=a; i<=b; i++) {
-            if (isPrime[i]) {
-                System.out.println(i);
+        prime_number(m, arr);
+
+        for (int i=n; i<=m; i++) {
+            if (arr[i] != 0) {
+                System.out.println(arr[i]);
+            }
+        }
+    }
+
+    private static void prime_number(int m, int[] arr) {
+        for (int i=2; i<=(m/2); i++) {
+            int mul = 2;
+            while (i*mul <= m) {
+                arr[i*mul] = 0;
+                mul++;
             }
         }
     }
