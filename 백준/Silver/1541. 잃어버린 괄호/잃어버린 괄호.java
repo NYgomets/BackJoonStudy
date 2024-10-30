@@ -27,10 +27,15 @@ public class Main {
             }
         }
 
+        int result =0;
         int intqueSize = integerQueue.size();
-        int result = integerQueue.poll();
-        for (int k=1; k<intqueSize; k++) {
-            result -= integerQueue.poll();
+        if (intqueSize == 1) {
+            result = integerQueue.poll();
+        } else if (intqueSize >= 2) {
+            result = integerQueue.poll();
+            for (int k=1; k<intqueSize; k++) {
+                result -= integerQueue.poll();
+            }
         }
 
         System.out.println(result);
