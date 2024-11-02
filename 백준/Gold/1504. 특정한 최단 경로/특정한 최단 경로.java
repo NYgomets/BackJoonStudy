@@ -21,7 +21,6 @@ public class Main {
     }
 
     static List<Node>[] adjList;
-    static boolean[] visitedArr;
     static int[] shortestArr;
     static int n;
     static int INF = 200000*1000;
@@ -62,8 +61,6 @@ public class Main {
     }
 
     private static int dikstra(int start, int end) {
-        visitedArr = new boolean[n+1];
-        Arrays.fill(visitedArr, false);
         shortestArr = new int[n+1];
         Arrays.fill(shortestArr, INF);
         shortestArr[start] = 0;
@@ -79,14 +76,10 @@ public class Main {
             Node poll = queue.poll();
             int current = poll.getNode();
 
-            if (!visitedArr[current]) {
-                visitedArr[current] = true;
-            }
-
             for (Node node : adjList[current]) {
                 int next = node.getNode();
                 int w = node.getWeight();
-                if (!visitedArr[end] && shortestArr[next] > shortestArr[current]+w) {
+                if (shortestArr[next] > shortestArr[current]+w) {
                     shortestArr[next] = shortestArr[current]+w;
                     queue.offer(new Node(next, shortestArr[next]));
                 }
