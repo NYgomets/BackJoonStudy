@@ -11,14 +11,14 @@ public class Main {
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
 
-        StringBuffer sb = new StringBuffer();
-        StringBuffer result = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
+        StringBuilder result = new StringBuilder();
         back(0, sb, result);
 
         System.out.println(result);
     }
 
-    private static void back(int depth, StringBuffer sb, StringBuffer result) {
+    private static void back(int depth, StringBuilder sb, StringBuilder result) {
         if (depth==m) {
             result.append(sb).append("\n");
             return;
