@@ -23,7 +23,6 @@ public class Main {
                 if (maze[i][j] == 2) {
                     queue.offer(new int[]{i, j, 0});
                     maze[i][j] = 0;
-                    visitedArr[i][j] = true;
                 }
             }
         }
