@@ -57,7 +57,7 @@ public class Main {
                 int nextY = currentY + directionY[i];
 
                 if (nextX >= 0 && nextX < n && nextY >= 0 && nextY < m) {
-                    if (maze[nextX][nextY] == 1 && !visitedArr[nextX][nextY]) {
+                    if (maze[nextX][nextY] != 0 && !visitedArr[nextX][nextY]) {
                         visitedArr[nextX][nextY] = true;
                         maze[nextX][nextY] = weight+1;
                         queue.offer(new int[]{nextX, nextY, weight+1});
