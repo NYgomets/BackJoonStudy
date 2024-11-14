@@ -58,11 +58,7 @@ public class Main {
         int dup = 0;
         for (int i=1; i<=n; i++) {
             int min = Math.min(shortest[1][i], Math.min(shortest[2][i], shortest[3][i]));
-
-            if (min == dup) {
-                continue;
-            }
-
+            
             if (min > dup) {
                 dup = min;
                 result = i;
