@@ -67,10 +67,6 @@ public class Main {
                 if (maze[nextX][nextY].equals("X")) {
                     continue;
                 }
-                if (poll[2]>=0 && maze[nextX][nextY].equals("D")) {
-                    System.out.println(poll[2]+1);
-                    return;
-                }
 
                 if (poll[2]>=0 && maze[nextX][nextY].equals(".")) {
                     visited[nextX][nextY] = true;
@@ -80,6 +76,9 @@ public class Main {
                     visited[nextX][nextY] = true;
                     maze[nextX][nextY] = "*";
                     queue.add(new int[]{nextX, nextY, -1});
+                } else if (poll[2]>=0 && maze[nextX][nextY].equals("D")) {
+                    System.out.println(poll[2]+1);
+                    return;
                 }
             }
         }
