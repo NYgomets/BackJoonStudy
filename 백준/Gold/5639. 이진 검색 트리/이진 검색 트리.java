@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static class Node {
+    static class Node{
         int value;
         Node left;
         Node right;
@@ -13,6 +13,7 @@ public class Main {
         }
     }
     static Node root;
+    static StringBuilder sb = new StringBuilder();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -26,28 +27,32 @@ public class Main {
         }
 
         postOrder(root);
+        System.out.println(sb);
     }
 
-    private static void postOrder(Node node) {
-        if (node == null) {
+    private static void postOrder(Node root) {
+        if (root == null) {
             return;
         }
-
-        postOrder(node.left);
-        postOrder(node.right);
-        System.out.println(node.value);
+        
+        postOrder(root.left);
+        postOrder(root.right);
+        sb.append(root.value).append("\n");
     }
 
-    private static Node insert(Node node, int value) {
-        if (node == null) {
+    private static Node insert(Node root, int value) {
+        if (root == null) {
             return new Node(value);
         } else {
-            if (value < node.value) {
-                node.left = insert(node.left, value);
+            if (value < root.value) {
+                root.left = insert(root.left, value);
             } else {
-                node.right = insert(node.right, value);
+                root.right = insert(root.right, value);
             }
         }
-        return node;
+        
+        return root;
     }
+
+
 }
