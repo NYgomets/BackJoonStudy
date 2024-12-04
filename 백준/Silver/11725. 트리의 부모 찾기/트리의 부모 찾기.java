@@ -1,47 +1,52 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
+    static int n;
     static List<Integer>[] adjList;
-    static boolean[] visitedArr;
-    static int[] result;
+    static int[] parent;
+    static boolean[] visited;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine()); // 노드 개수
-        visitedArr = new boolean[n+1]; // 방문 배열
+        n = Integer.parseInt(br.readLine());
 
-        /**
-         * 인접리스트로 그래프를 표현
-         */
         adjList = new ArrayList[n+1];
         for (int i=1; i<=n; i++) {
             adjList[i] = new ArrayList<>();
         }
-        for (int i=1; i<n; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            int first = Integer.parseInt(st.nextToken());
-            int second = Integer.parseInt(st.nextToken());
-            adjList[first].add(second);
-            adjList[second].add(first);
+
+        StringTokenizer st;
+        for (int i=0; i<n-1; i++) {
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            adjList[a].add(b);
+            adjList[b].add(a);
         }
 
-        result = new int[n+1];
-        dfs(1, -1);
-        for (int i=2; i<=n; i++) {
-            System.out.println(result[i]);
+        parent = new int[n+1];
+        for (int i=1; i<=n; i++) {
+            parent[i] = i;
         }
+        visited = new boolean[n+1];
+
+        dfs(1);
+
+        StringBuilder sb = new StringBuilder();
+        for (int i=2; i<=n; i++) {
+            sb.append(parent[i]).append("\n");
+        }
+        System.out.println(sb);
     }
 
-    private static void dfs(int current, int parent) {
-        visitedArr[current] = true;
+    private static void dfs(int start) {
+        visited[start] = true;
 
-        for (int next : adjList[current]) {
-            if (!visitedArr[next]) {
-                dfs(next, current);
+        for (int next : adjList[start]) {
+            if (!visited[next]) {
+                dfs(next);
             } else {
-                result[current] = next;
+                parent[start] = next;
             }
         }
     }
