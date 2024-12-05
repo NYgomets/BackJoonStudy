@@ -2,55 +2,47 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static class Node {
-        int county;
-        int gold;
-        int silver;
-        int bronze;
-
-
-        public Node(int county, int gold, int silver, int bronze) {
-            this.county = county;
-            this.gold = gold;
-            this.silver = silver;
-            this.bronze = bronze;
-        }
-    }
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int k = Integer.parseInt(st.nextToken());
-        List<Node> list = new ArrayList<>();
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
 
-        for (int i=1; i<=n; i++) {
+        Map<String, List<Integer>> nation = new HashMap<>();
+
+        for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
-            int gold = Integer.parseInt(st.nextToken());
-            int silver = Integer.parseInt(st.nextToken());
-            int bronze = Integer.parseInt(st.nextToken());
-            list.add(new Node(i, gold, silver, bronze));
+            int n = Integer.parseInt(st.nextToken());  // 국가 번호
+            int g = Integer.parseInt(st.nextToken());  // 금메달 수
+            int s = Integer.parseInt(st.nextToken());  // 은메달 수
+            int b = Integer.parseInt(st.nextToken());  // 동메달 수
+
+            String key = g + "," + s + "," + b;
+            nation.putIfAbsent(key, new ArrayList<>());
+            nation.get(key).add(n);
         }
 
-        list.sort(((o1, o2) -> {
-            if (o1.gold == o2.gold) {
-                if (o1.silver == o2.silver) {
-                    return o2.bronze - o1.bronze;
-                } else {
-                    return o2.silver - o1.silver;
-                }
-            } else {
-                return o2.gold - o1.gold;
+        List<String> record = new ArrayList<>(nation.keySet());
+        Collections.sort(record, (a, b) -> {
+            String[] aArr = a.split(",");
+            String[] bArr = b.split(",");
+            for (int i = 0; i < 3; i++) {
+                int diff = Integer.parseInt(bArr[i]) - Integer.parseInt(aArr[i]);
+                if (diff != 0) return diff;
             }
-        }));
+            return 0;
+        });
 
-        int rank = 1;
-        for (int i=0; i<n; i++) {
-            if (list.get(i).county == k) {
-                System.out.println(rank);
-                break;
-            } else {
-                rank++;
+        int ret = 1;
+        for (String rec : record) {
+            List<Integer> countries = nation.get(rec);
+            for (int country : countries) {
+                if (country == K) {
+                    System.out.println(ret);
+                    return;
+                }
             }
+            ret += countries.size();
         }
     }
 }
