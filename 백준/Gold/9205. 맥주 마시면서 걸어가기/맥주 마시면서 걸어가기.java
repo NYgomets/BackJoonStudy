@@ -27,7 +27,6 @@ public class Main {
             position = new ArrayList<>();
             int houseX = Integer.parseInt(st.nextToken());
             int houseY = Integer.parseInt(st.nextToken());
-            position.add(new Node(houseX, houseY));
 
             for (int i=0; i<n; i++) {
                 st = new StringTokenizer(br.readLine());
@@ -41,7 +40,7 @@ public class Main {
             position.add(new Node(rockX, rockY));
             visited = new boolean[n+2];
 
-            if (bfs(position.get(0))) {
+            if (bfs(houseX, houseY)) {
                 System.out.println("happy");
             } else {
                 System.out.println("sad");
@@ -49,9 +48,9 @@ public class Main {
         }
     }
 
-    private static boolean bfs(Node node) {
+    private static boolean bfs(int houseX, int houseY) {
         Queue<Node> queue = new LinkedList<>();
-        queue.add(new Node(node.x, node.y));
+        queue.add(new Node(houseX, houseY));
         visited[0] = true;
 
         while (!queue.isEmpty()) {
@@ -63,12 +62,12 @@ public class Main {
                 return true;
             }
 
-            for (int i=1; i<position.size(); i++) {
+            for (int i=0; i<position.size(); i++) {
                 int nextX = position.get(i).x;
                 int nextY = position.get(i).y;
 
-                if (!visited[i] && Math.abs(nextX-currentX) + Math.abs(nextY-currentY) <= 1000) {
-                    visited[i] = true;
+                if (!visited[i+1] && Math.abs(nextX-currentX) + Math.abs(nextY-currentY) <= 1000) {
+                    visited[i+1] = true;
                     queue.add(new Node(nextX, nextY));
                 }
             }
