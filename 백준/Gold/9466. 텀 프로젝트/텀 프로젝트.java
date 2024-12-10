@@ -41,16 +41,17 @@ public class Main {
 
     private static void roop(int start) {
         visited[start] = true;
-        int next = adjList[start].get(0);
 
-        if (!visited[next]) {
-            roop(next);
-        } else if (!cycle[next]) {
-            int temp = next;
-            do {
-                result++;
-                temp = adjList[temp].get(0);
-            } while (temp!=next);
+        for (int next : adjList[start]) {
+            if (!visited[next]) {
+                roop(next);
+            } else if (!cycle[next]) {
+                int temp = next;
+                do {
+                    result++;
+                    temp = adjList[temp].get(0);
+                } while (temp!=next);
+            }
         }
 
         cycle[start] = true;
