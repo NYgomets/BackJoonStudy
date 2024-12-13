@@ -30,13 +30,47 @@ public class Main {
 
             int low = lowerBound(right, check);
             int high = upperBound(right, check);
+
             count += high-low;
         }
 
-        if (s == 0) {
+        if (s==0) {
             count--;
         }
+
         System.out.println(count);
+    }
+
+    private static int upperBound(List<Integer> right, int check) {
+        int start = 0;
+        int end = right.size();
+
+        while (start<end) {
+            int mid = (start+end)/2;
+            if (right.get(mid) > check) {
+                end = mid;
+            } else {
+                start = mid+1;
+            }
+        }
+
+        return start;
+    }
+
+    private static int lowerBound(List<Integer> right, int check) {
+        int start = 0;
+        int end = right.size();
+
+        while (start<end) {
+            int mid = (start+end)/2;
+            if (right.get(mid) >= check) {
+                end = mid;
+            } else {
+                start = mid+1;
+            }
+        }
+
+        return start;
     }
 
     private static void subsetSum(int[] arr, int start, int end, int currentSum, List<Integer> list) {
@@ -47,39 +81,5 @@ public class Main {
 
         subsetSum(arr, start+1, end, currentSum, list);
         subsetSum(arr, start+1, end, currentSum+arr[start], list);
-    }
-
-    private static int upperBound(List<Integer> list, int s) {
-        int start = 0;
-        int end = list.size();
-
-        while (start<end) {
-            int mid = (start+end)/2;
-
-            if (list.get(mid)>s) {
-                end = mid;
-            } else {
-                start = mid+1;
-            }
-        }
-
-        return start;
-    }
-
-    private static int lowerBound(List<Integer> list, int s) {
-        int start = 0;
-        int end = list.size();
-
-        while (start<end) {
-            int mid = (start+end)/2;
-
-            if (list.get(mid)>=s) {
-                end = mid;
-            } else {
-                start = mid+1;
-            }
-        }
-
-        return start;
     }
 }
