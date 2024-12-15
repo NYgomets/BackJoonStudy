@@ -44,25 +44,13 @@ public class Main {
                 return false;
             }
         }
-
-        for (int i=1; row+i<n&&col+i<n; i++) {
-            if (maze[row+i][col+i]) {
-                return false;
-            }
-        }
-
+        
         for (int i=1; row-i>=0&&col+i<n; i++) {
             if (maze[row-i][col+i]) {
                 return false;
             }
         }
-
-        for (int i=1; row+i<n&&col-i>=0; i++) {
-            if (maze[row+i][col-i]) {
-                return false;
-            }
-        }
-
+        
         return true;
     }
 }
