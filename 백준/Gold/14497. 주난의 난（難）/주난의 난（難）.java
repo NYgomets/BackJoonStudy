@@ -6,6 +6,7 @@ import java.util.*;
 public class Main {
     static int n;
     static int m;
+    static int[][] shortest;
     static int[][] maze;
     static boolean[][] visited;
     static int juX;
@@ -41,12 +42,19 @@ public class Main {
             }
         }
 
+        shortest = new int[n+1][m+1];
+        for (int i=1; i<=n; i++) {
+            for (int j=1; j<=m; j++) {
+                shortest[i][j] = Integer.MAX_VALUE;
+            }
+        }
+        shortest[juX][juY] = 0;
         System.out.println(bfs(juX, juY));
 
     }
 
     private static int bfs(int startX, int startY) {
-        Deque<int[]> queue = new ArrayDeque<>();
+        Queue<int[]> queue = new PriorityQueue<>(((o1, o2) -> Integer.compare(o1[2], o2[2])));
         visited[startX][startY] = true;
         queue.add(new int[]{startX, startY, 0});
 
@@ -71,12 +79,10 @@ public class Main {
                     continue;
                 }
 
-                if (maze[nextX][nextY] == 1) {
+                if (shortest[nextX][nextY] > shortest[currentX][currentY]+maze[nextX][nextY]) {
+                    shortest[nextX][nextY] = shortest[currentX][currentY]+maze[nextX][nextY];
                     visited[nextX][nextY] = true;
-                    queue.addLast(new int[]{nextX, nextY, count+1});
-                } else {
-                    visited[nextX][nextY] = true;
-                    queue.addFirst(new int[]{nextX, nextY, count});
+                    queue.add(new int[]{nextX, nextY, shortest[nextX][nextY]});
                 }
             }
         }
