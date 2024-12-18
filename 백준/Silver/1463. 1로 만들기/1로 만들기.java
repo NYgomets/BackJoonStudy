@@ -10,10 +10,10 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
 
-        System.out.println(makeOne(n,0));
+        System.out.println(makeOne(n));
     }
 
-    private static int makeOne(int n, int count) {
+    private static int makeOne(int n) {
         if (n==1) {
             return 0;
         }
@@ -25,12 +25,12 @@ public class Main {
         int result = Integer.MAX_VALUE;
 
         if (n%3==0) {
-            result = Math.min(result, makeOne(n/3, count)+1);
+            result = Math.min(result, makeOne(n/3)+1);
         }
         if (n%2==0) {
-            result = Math.min(result, makeOne(n/2, count)+1);
+            result = Math.min(result, makeOne(n/2)+1);
         }
-        result = Math.min(result, makeOne(n-1, count)+1);
+        result = Math.min(result, makeOne(n-1)+1);
 
         map.put(n, result);
 
