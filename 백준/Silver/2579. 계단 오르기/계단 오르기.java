@@ -5,12 +5,12 @@ import java.util.*;
 
 public class Main {
     static int[] stair;
-    static int[] memo;
+    static Integer[] memo;
     static int n;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         n = Integer.parseInt(br.readLine());
-        memo = new int[n+1];
+        memo = new Integer[n+1];
         stair = new int[n+1];
         for (int i=1; i<=n; i++) {
             stair[i] = Integer.parseInt(br.readLine());
@@ -22,10 +22,14 @@ public class Main {
             memo[2] = stair[1]+stair[2];
         }
 
-        for (int i=3; i<=n; i++) {
-            memo[i] = Math.max(memo[i-2]+stair[i], memo[i-3]+stair[i-1]+stair[i]);
+        System.out.println(find(n));
+    }
+
+    private static int find(int n) {
+        if (memo[n] == null) {
+            memo[n] = Math.max(find(n-2)+stair[n], find(n-3)+stair[n-1]+stair[n]);
         }
 
-        System.out.println(memo[n]);
+        return memo[n];
     }
 }
