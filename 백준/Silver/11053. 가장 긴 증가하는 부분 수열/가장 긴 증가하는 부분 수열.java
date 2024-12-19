@@ -31,10 +31,9 @@ public class Main {
         }
 
         dp[idx] = 1;
-
         for (int i=idx+1; i<n; i++) {
             if (arr[i] > arr[idx]) {
-                dp[idx] = Math.max(dp[idx], find(i)+1);
+                dp[idx] = Math.max(dp[idx], 1+find(i));
             }
         }
 
