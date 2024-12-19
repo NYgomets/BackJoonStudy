@@ -12,7 +12,6 @@ public class Main {
         n = Integer.parseInt(br.readLine());
 
         dp = new Long[n+1][4];
-
         house = new long[n+1][4];
         for (int i=1; i<=n; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
@@ -24,11 +23,16 @@ public class Main {
             house[i][3] = blue;
         }
 
-        System.out.println(findMintCost(0, 0));
+        long min = Integer.MAX_VALUE;
+        for (int i=1; i<=3; i++) {
+            min = Math.min(min, findMinCost(1, i));
+        }
+
+        System.out.println(min);
     }
 
-    private static long findMintCost(int count, int color) {
-        if (count == n+1) {
+    private static long findMinCost(int count, int color) {
+        if (count > n) {
             return 0;
         }
 
@@ -37,20 +41,15 @@ public class Main {
         }
 
         long minCost = Integer.MAX_VALUE;
-
-        if (color == 0) {
-            minCost = Math.min(minCost, house[count][color]+findMintCost(count+1, 1));
-            minCost = Math.min(minCost, house[count][color]+findMintCost(count+1, 2));
-            minCost = Math.min(minCost, house[count][color]+findMintCost(count+1, 3));
-        } else if (color == 1) {
-            minCost = Math.min(minCost, house[count][color]+findMintCost(count+1, 2));
-            minCost = Math.min(minCost, house[count][color]+findMintCost(count+1, 3));
-        } else if (color == 2) {
-            minCost = Math.min(minCost, house[count][color]+findMintCost(count+1, 1));
-            minCost = Math.min(minCost, house[count][color]+findMintCost(count+1, 3));
+        if (color==1) {
+            minCost = Math.min(minCost, house[count][color]+findMinCost(count+1, 2));
+            minCost = Math.min(minCost, house[count][color]+findMinCost(count+1, 3));
+        } else if (color==2) {
+            minCost = Math.min(minCost, house[count][color]+findMinCost(count+1, 1));
+            minCost = Math.min(minCost, house[count][color]+findMinCost(count+1, 3));
         } else {
-            minCost = Math.min(minCost, house[count][color]+findMintCost(count+1, 1));
-            minCost = Math.min(minCost, house[count][color]+findMintCost(count+1, 2));
+            minCost = Math.min(minCost, house[count][color]+findMinCost(count+1, 1));
+            minCost = Math.min(minCost, house[count][color]+findMinCost(count+1, 2));
         }
 
         dp[count][color] = minCost;
