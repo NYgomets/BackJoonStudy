@@ -26,14 +26,14 @@ public class Main {
             } else {
                 int start = 0;
                 int end = length-1;
-                while (start<=end) {
+                while (start<end) {
                     int mid = (start+end)/2;
                     int midV = lis[mid];
 
                     if (midV < key) {
                         start = mid+1;
                     } else {
-                        end = mid-1;
+                        end = mid;
                     }
                 }
 
