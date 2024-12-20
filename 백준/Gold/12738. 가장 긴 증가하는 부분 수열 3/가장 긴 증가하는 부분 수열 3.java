@@ -15,15 +15,29 @@ public class Main {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        int[] list = new int[n];
-        int length = 0;
-        for (int i=0; i<n; i++) {
-            int idx = Arrays.binarySearch(list, 0, length, arr[i]);
-            if (idx<0) {
-                list[-(idx+1)] = arr[i];
-            }
-            if (-(idx+1) == length) {
+        int[] lis = new int[n];
+        lis[0] = arr[0];
+        int length = 1;
+        for (int i=1; i<n; i++) {
+            int key = arr[i];
+            if (key > lis[length-1]) {
+                lis[length] = key;
                 length++;
+            } else {
+                int start = 0;
+                int end = length-1;
+                while (start<=end) {
+                    int mid = (start+end)/2;
+                    int midV = lis[mid];
+
+                    if (midV < key) {
+                        start = mid+1;
+                    } else {
+                        end = mid-1;
+                    }
+                }
+
+                lis[start] = key;
             }
         }
 
