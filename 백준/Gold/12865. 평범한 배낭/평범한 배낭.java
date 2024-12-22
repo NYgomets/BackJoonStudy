@@ -32,25 +32,25 @@ public class Main {
             nodes[i] = new Node(w, v);
         }
 
-        System.out.println(recursive(0, 0));
+        System.out.println(find(0, 0));
     }
 
-    private static int recursive(int choose, int w) {
+    private static int find(int choose, int weight) {
         if (choose>=n) {
             return 0;
         }
 
-        if (dp[choose][w] != null) {
-            return dp[choose][w];
+        if (dp[choose][weight] != null) {
+            return dp[choose][weight];
         }
 
         int max = 0;
-        max = Math.max(max, recursive(choose+1, w));
-        if (w+nodes[choose].weight <= k) {
-            max = Math.max(max, nodes[choose].value+recursive(choose+1, w+nodes[choose].weight));
+        max = Math.max(max, find(choose+1, weight));
+        if (weight+nodes[choose].weight<=k) {
+            max = Math.max(max, nodes[choose].value+find(choose+1, weight+nodes[choose].weight));
         }
 
-        dp[choose][w] = max;
+        dp[choose][weight] = max;
 
         return max;
     }
