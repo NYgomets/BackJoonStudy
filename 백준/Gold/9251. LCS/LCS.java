@@ -13,10 +13,7 @@ public class Main {
         second = br.readLine();
 
         dp = new Integer[first.length()][second.length()];
-        int result = 0;
-        for (int i=0; i<first.length(); i++) {
-            result = Math.max(result, find(i, 0));
-        }
+        int result = find(0, 0);
 
         System.out.println(result);
     }
