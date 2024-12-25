@@ -27,10 +27,6 @@ public class Main {
     }
 
     private static int find(int current) {
-        if (current>=n) {
-            return 0;
-        }
-
         if (dp[current] != null) {
             return dp[current];
         }
