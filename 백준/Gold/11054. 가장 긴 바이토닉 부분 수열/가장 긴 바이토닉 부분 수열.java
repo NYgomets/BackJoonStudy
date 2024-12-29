@@ -32,14 +32,16 @@ public class Main {
             return dpDown[idx];
         }
 
-        dpDown[idx] = 1;
+        int result = 1;
         for (int i=idx+1; i<n; i++) {
             if (arr[idx] > arr[i]) {
-                dpDown[idx] = Math.max(dpDown[idx], 1+findDown(i));
+                result = Math.max(result, 1+findDown(i));
             }
         }
 
-        return dpDown[idx];
+        dpDown[idx] = result;
+
+        return result;
     }
 
     private static int findUp(int idx) {
@@ -47,13 +49,15 @@ public class Main {
             return dpUp[idx];
         }
 
-        dpUp[idx] = 1;
+        int result = 1;
         for (int i=0; i<idx; i++) {
             if (arr[i] < arr[idx]) {
-                dpUp[idx] = Math.max(dpUp[idx], 1+findUp(i));
+                result = Math.max(result, 1+findUp(i));
             }
         }
 
-        return dpUp[idx];
+        dpUp[idx] = result;
+
+        return result;
     }
 }
