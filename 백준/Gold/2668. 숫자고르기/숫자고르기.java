@@ -12,6 +12,7 @@ public class Main {
     static int result = 0;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
         n = Integer.parseInt(br.readLine());
         list = new ArrayList[n+1];
         for (int i=1; i<=n; i++) {
@@ -23,19 +24,21 @@ public class Main {
             list[i].add(a);
         }
 
+        sorted = new ArrayList<>();
         visited = new boolean[n+1];
         checked = new boolean[n+1];
-        sorted = new ArrayList<>();
 
         for (int i=1; i<=n; i++) {
             dfs(i);
         }
 
         Collections.sort(sorted);
-        System.out.println(result);
-        for (int i : sorted) {
-            System.out.println(i);
+        sb.append(result).append("\n");
+        for (int c : sorted) {
+            sb.append(c).append("\n");
         }
+
+        System.out.println(sb);
     }
 
     private static void dfs(int start) {
@@ -44,7 +47,7 @@ public class Main {
         for (int next : list[start]) {
             if (!visited[next]) {
                 dfs(next);
-            } else if (!checked[next]){
+            } else if (!checked[next]) {
                 int temp = next;
                 do {
                     result++;
