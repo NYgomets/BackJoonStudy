@@ -20,7 +20,7 @@ public class Main {
             this.weight = weight;
         }
     }
-    static int result = 0;
+    static int result = Integer.MAX_VALUE;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -47,7 +47,7 @@ public class Main {
         visited = new boolean[n+1];
         visited[a] = true;
         dfs(a, 0, 0);
-        if (visited[b]) {
+        if (result != Integer.MAX_VALUE) {
             System.out.println(result);
         } else {
             System.out.println(-1);
@@ -56,7 +56,7 @@ public class Main {
 
     private static void dfs(int start, int total, int max) {
         if (start == b) {
-            result = Math.max(result, max);
+            result = Math.min(result, max);
             return;
         }
 
