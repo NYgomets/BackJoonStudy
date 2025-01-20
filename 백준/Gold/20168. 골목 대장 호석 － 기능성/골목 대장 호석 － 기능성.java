@@ -47,18 +47,21 @@ public class Main {
         visited = new boolean[n+1];
         visited[a] = true;
         dfs(a, 0, 0);
-        System.out.println(result);
+        if (visited[b]) {
+            System.out.println(result);
+        } else {
+            System.out.println(-1);
+        }
     }
 
     private static void dfs(int start, int total, int max) {
         if (start == b) {
             result = Math.max(result, max);
-        } else if (start > b) {
             return;
         }
 
         for (Node nodes : adjList[start]) {
-            if (!visited[nodes.end] && nodes.weight+total<= c) {
+            if (!visited[nodes.end] && nodes.weight+total <= c) {
                 visited[nodes.end] = true;
                 dfs(nodes.end, nodes.weight+total, Math.max(max, nodes.weight));
                 visited[nodes.end] = false;
