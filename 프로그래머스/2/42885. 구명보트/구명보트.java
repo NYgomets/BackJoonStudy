@@ -2,19 +2,19 @@ import java.util.*;
 
 class Solution {
     public int solution(int[] people, int limit) {
-        int answer = 0;
+        int boat = 0;
+        int start = 0;
         Arrays.sort(people);
-        int left = 0;
-        int right = people.length-1;
-        while (left <= right) {
-            int sum = people[left] + people[right];
+        int end = people.length-1;
+        while (start <= end) {
+            int sum = people[start]+people[end];
             
             if (sum <= limit) {
-                left++;
-            } 
-            right--;
-            answer++;
+                start++;
+            }
+            end--;
+            boat++;
         }
-        return answer;
+        return boat;
     }
 }
