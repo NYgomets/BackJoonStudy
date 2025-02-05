@@ -4,7 +4,7 @@ class Solution {
         int[] answer = new int[length];
 
         for (int i = 0; i < length; i++) {
-            answer[i] = Math.max((int) ((left + i) / n) + 1, (int) ((left + i) % n) + 1);
+            answer[i] = Math.max((int) ((left+i)/n)+1, (int) ((left+i)%n)+1);
         }
 
         return answer;
