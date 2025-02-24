@@ -6,12 +6,6 @@ class Solution {
         int answer = 0;
         int current = 1;
         for (int check : order) {
-            if (current == check) {
-                answer++;
-                current++;
-                continue;
-            }
-            
             while (current <= check) {
                 stack.push(current);
                 current++;
