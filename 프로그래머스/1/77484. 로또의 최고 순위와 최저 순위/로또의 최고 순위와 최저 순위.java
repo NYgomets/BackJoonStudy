@@ -5,7 +5,6 @@ class Solution {
         int zero = 0;
         for (int i=0; i<lottos.length; i++) {
             if (lottos[i] == 0) {
-                lottos[i] = 46;
                 zero++;
             }
         }
