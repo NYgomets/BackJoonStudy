@@ -21,7 +21,8 @@ class Solution {
                     long l = Long.parseLong(check, 2);
                     result[idx++] = l;
                 } else {
-                    String check = first.substring(0, zero) + "10" + first.substring(zero+2, first.length());
+                    String check = first.substring(0, zero) + "10" 
+    + (zero + 2 < first.length() ? first.substring(zero + 2, first.length()) : "");
                     long l = Long.parseLong(check, 2);
                     result[idx++] = l;
                 }
