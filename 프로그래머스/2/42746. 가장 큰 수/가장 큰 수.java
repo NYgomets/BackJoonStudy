@@ -11,18 +11,15 @@ class Solution {
             String second = ""+o2+o1;
             return Integer.compare(Integer.parseInt(second), Integer.parseInt(first));
         });
-        
         StringBuilder sb = new StringBuilder();
         for (int i : list) {
-            sb.append(i).append("");
+            sb.append(i);
         }
         
         String result = sb.toString();
-        
         if (result.startsWith("0")) {
             return "0";
         }
-        
         return result;
     }
 }
