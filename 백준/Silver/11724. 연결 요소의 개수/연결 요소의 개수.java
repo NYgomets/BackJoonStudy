@@ -1,53 +1,56 @@
-import java.io.*;
-import java.math.BigInteger;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class Main {
-    static int count = 0;
+    static class Node {
+        int n;
+
+        public Node(int n) {
+            this.n = n;
+        }
+    }
+    static ArrayList<Node>[] adjList;
+    static boolean[] visited;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken()); // 정점의 개수
-        int M = Integer.parseInt(st.nextToken()); // 간선의 개수
-        boolean[] visitedArr = new boolean[N + 1]; // 방문 여부 검사
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
 
-        /**
-         * 인접리스르로 그래프를 표현
-         */
-        List<Integer>[] adjList = new ArrayList[N+1];
-       for (int i=1; i<=N; i++) {
-           adjList[i] = new ArrayList<>();
-       }
+        visited = new boolean[n+1];
+        adjList = new ArrayList[n+1];
+        for (int i=1; i<=n; i++) {
+            adjList[i] = new ArrayList<>();
+        }
 
-       for (int i=0; i<M; i++) {
-           st = new StringTokenizer(br.readLine());
-           int u = Integer.parseInt(st.nextToken());
-           int v = Integer.parseInt(st.nextToken());
-           adjList[u].add(v);
-           adjList[v].add(u);
-       }
+        for (int i=0; i<m; i++) {
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            adjList[a].add(new Node(b));
+            adjList[b].add(new Node(a));
+        }
 
-       for (int i=1; i<=N; i++) {
-           /**
-            * 해당 노드 방문 여부 검사
-            */
-           if (!visitedArr[i]) {
-               dfs(i, adjList, visitedArr);
-               count++;
-           }
-       }
+        int count = 0;
+        for (int i=1; i<=n; i++) {
+            if (!visited[i]) {
+                count++;
+                dfs(i);
+            }
+        }
 
         System.out.println(count);
     }
 
-    private static void dfs(int i, List<Integer>[] adjList, boolean[] visitedArr) {
-        visitedArr[i] = true;
+    private static void dfs(int start) {
+        visited[start] = true;
 
-        Iterator<Integer> iter = adjList[i].listIterator();
-        while (iter.hasNext()) {
-            int next = iter.next();
-            if (!visitedArr[next]) {
-                dfs(next, adjList, visitedArr);
+        for (Node node : adjList[start]) {
+            if (!visited[node.n]) {
+                dfs(node.n);
             }
         }
     }
