@@ -1,45 +1,53 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
-    static int count = 0;
+    static int computer;
+    static List<Integer>[] list;
+    static boolean[] visited;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
-        int computer = Integer.parseInt(br.readLine());
-        int network = Integer.parseInt(br.readLine());
-        boolean[] visitedArr = new boolean[computer+1];
-
-        /**
-         * 인접리스트로 그래프를 표현
-         */
-        List<Integer>[] adjList = new ArrayList[computer+1];
-        for (int i=0; i<=computer; i++) {
-            adjList[i] = new ArrayList<>();
+        computer = Integer.parseInt(br.readLine());
+        list = new ArrayList[computer+1];
+        for (int i=1; i<=computer; i++) {
+            list[i] = new ArrayList<>();
         }
+        visited = new boolean[computer+1];
 
-        for (int i=0; i<network; i++) {
+        int m = Integer.parseInt(br.readLine());
+        for (int i=0; i<m; i++) {
             st = new StringTokenizer(br.readLine());
-            int u = Integer.parseInt(st.nextToken());
-            int v = Integer.parseInt(st.nextToken());
-            adjList[u].add(v);
-            adjList[v].add(u);
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            list[a].add(b);
+            list[b].add(a);
         }
 
-        dfs(1, adjList, visitedArr);
-
-        System.out.println(count);
-
+        int result = dfs(1);
+        System.out.println(result);
     }
 
-    private static void dfs(int i, List<Integer>[] adjList, boolean[] visitedArr) {
-        visitedArr[i] = true;
+    private static int dfs(int start) {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(start);
+        visited[start] = true;
+        int count = 0;
 
-        for (int next : adjList[i]) {
-            if (!visitedArr[next]) {
-                dfs(next, adjList, visitedArr);
-                count++;
+        while (!queue.isEmpty()) {
+            Integer current = queue.poll();
+
+            for (Integer next : list[current]) {
+                if (!visited[next]) {
+                    visited[next] = true;
+                    count++;
+                    queue.add(next);
+                }
             }
         }
+
+        return count;
     }
 }
