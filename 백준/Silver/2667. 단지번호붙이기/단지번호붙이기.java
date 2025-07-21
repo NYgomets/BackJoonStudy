@@ -1,64 +1,74 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
-    static int line;
-    static int[][] map;
-    static boolean[][] visit;
-    static int count;
-    static int[] dx = {0,0,-1,1};
-    static int[] dy = {1,-1,0,0};
-    static List<Integer> num;
-
-    static void dfs(int x, int y) {
-        visit[x][y] = true;
-        count++;
-
-        // map[x][y] 좌표의 상하좌우 move
-        for (int i=0; i<4; i++) {
-            int x1 = x + dx[i];
-            int y1 = y + dy[i];
-
-            if (x1<0 || x1>=line || y1<0 || y1>=line) {
-                continue;
-            } else if (map[x1][y1] == 1 && !visit[x1][y1]) {
-                dfs(x1, y1);
+    static int[][] maze;
+    static int[] directionX = {-1, 0, 1, 0};
+    static int[] directionY = {0, -1, 0, 1};
+    static boolean[][] visited;
+    static int n;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        n = Integer.parseInt(br.readLine());
+        maze = new int[n][n];
+        visited = new boolean[n][n];
+        for (int i=0; i<n; i++) {
+            String string = br.readLine();
+            for (int j=0; j<n; j++) {
+                int num = string.charAt(j) - '0';
+                maze[i][j] = num;
             }
         }
+        int sum = 0;
+        List<Integer> list = new ArrayList<>();
+
+        for (int i=0; i<n; i++) {
+            for (int j=0; j<n; j++) {
+                if (maze[i][j] != 0 && !visited[i][j]) {
+                    sum++;
+                    int num = bfs(i, j);
+                    list.add(num);
+                }
+            }
+        }
+        Collections.sort(list);
+
+        System.out.println(sum);
+        for (int i : list) {
+            System.out.println(i);
+        }
+
     }
 
-    public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static int bfs(int x, int y) {
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{x, y});
+        visited[x][y] = true;
+        int count = 1;
 
-        line = Integer.parseInt(br.readLine());
-        map = new int[line][line];
-        visit = new boolean[line][line];
-        num = new ArrayList<Integer>();
+        while (!queue.isEmpty()) {
+            int[] poll = queue.poll();
+            int currentX = poll[0];
+            int currentY = poll[1];
 
-        for (int i=0; i<line; i++) {
-            String s = br.readLine();
-            for (int j=0; j<line; j++) {
-                map[i][j] = s.charAt(j) - '0';
-            }
-        }
+            for (int i=0; i<4; i++) {
+                int nextX = currentX+directionX[i];
+                int nextY = currentY+directionY[i];
 
-        for (int i=0; i<line; i++) {
-            for (int j=0; j<line; j++) {
-                if (map[i][j] == 1 && !visit[i][j]) {
-                    count = 0;
-                    dfs(i, j);
-                    num.add(count);
+                if (0<=nextX && nextX<n) {
+                    if (0<=nextY && nextY<n) {
+                        if (maze[nextX][nextY] == 1 && !visited[nextX][nextY]) {
+                            visited[nextX][nextY] = true;
+                            count++;
+                            queue.add(new int[]{nextX, nextY});
+                        }
+                    }
                 }
             }
         }
 
-        Collections.sort(num);
-
-        System.out.println(num.size());
-        for (Integer integer : num) {
-            System.out.println(integer);
-        }
-
-        br.close();
+        return count;
     }
 }
