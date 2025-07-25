@@ -8,80 +8,70 @@ import java.util.StringTokenizer;
 public class Main {
     static int n;
     static int[][] maze;
-    static boolean[][] visitedArr;
-    static int max = 0;
-    static int min = Integer.MAX_VALUE;
-    static int count = 0;
+    static boolean[][] visited;
+    static int[] directionX = {-1, 0, 1, 0};
+    static int[] directionY = {0, -1, 0, 1};
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
         n = Integer.parseInt(br.readLine());
         maze = new int[n][n];
-        for (int i=0; i<n; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            for (int j=0; j<n; j++) {
-                int length = Integer.parseInt(st.nextToken());
-                maze[i][j] = length;
-                if (max < length) {
-                    max = length;
-                }
-                if (min > length) {
-                    min = length;
-                }
-            }
-        }
-
-        for (int i=min; i<=max; i++) {
-            int check = check(i);
-            if (count < check) {
-                count = check;
-            }
-        }
-
-        if (count == 0) {
-            System.out.println(1);
-        } else {
-            System.out.println(count);
-        }
-     }
-
-    private static int check(int length) {
-        visitedArr = new boolean[n][n];
-        int checkCount = 0;
+        int max = 0;
 
         for (int i=0; i<n; i++) {
+            st = new StringTokenizer(br.readLine());
             for (int j=0; j<n; j++) {
-                if (maze[i][j] > length && !visitedArr[i][j]) {
-                    bfs(i, j, length);
-                    checkCount++;
-                }
+                maze[i][j] = Integer.parseInt(st.nextToken());
+                max = Math.max(maze[i][j], max);
             }
         }
 
-        return checkCount;
+        int result = 0;
+        for (int i=0; i<=max; i++) {
+            visited = new boolean[n][n];
+            int check = flood(i);
+            result = Math.max(result, check);
+        }
+        System.out.println(result);
     }
 
-    private static void bfs(int y, int x, int l) {
+    private static int flood(int water) {
+        int num = 0;
+        for (int i=0; i<n; i++) {
+            for (int j=0; j<n; j++) {
+                if (maze[i][j] > water && !visited[i][j]) {
+                    num++;
+                    bfs(i, j, water);
+                }
+            }
+        }
+        return num;
+    }
+
+    private static void bfs(int startX, int startY, int water) {
         Queue<int[]> queue = new LinkedList<>();
-        visitedArr[y][x] = true;
-        queue.add(new int[]{y, x});
+        queue.add(new int[]{startX, startY});
+        visited[startX][startY] = true;
 
         while (!queue.isEmpty()) {
             int[] poll = queue.poll();
-            int currentY = poll[0];
-            int currentX = poll[1];
-
-            int[] directionY = {-1, 1, 0, 0};
-            int[] directionX = {0, 0, -1, 1};
+            int currentX = poll[0];
+            int currentY = poll[1];
 
             for (int i=0; i<4; i++) {
-                int nextY = currentY+directionY[i];
                 int nextX = currentX+directionX[i];
+                int nextY = currentY+directionY[i];
 
-                if (nextX >= 0 && nextX < n && nextY >= 0 && nextY < n) {
-                    if (maze[nextY][nextX] > l && !visitedArr[nextY][nextX]) {
-                        visitedArr[nextY][nextX] = true;
-                        queue.offer(new int[]{nextY, nextX});
-                    }
+                if (nextX<0 || nextX>=n) {
+                    continue;
+                }
+                if (nextY<0 || nextY>=n) {
+                    continue;
+                }
+
+                if (maze[nextX][nextY] > water && !visited[nextX][nextY]) {
+                    visited[nextX][nextY] = true;
+                    queue.add(new int[]{nextX, nextY});
                 }
             }
         }
