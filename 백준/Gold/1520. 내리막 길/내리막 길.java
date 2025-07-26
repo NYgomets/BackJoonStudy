@@ -6,6 +6,7 @@ import java.util.StringTokenizer;
 public class Main {
     static int n;
     static int m;
+    static boolean[][] visited;
     static int[][] maze;
     static Integer[][] dp;
     static int[] directionX = {-1, 0, 1, 0};
@@ -16,6 +17,7 @@ public class Main {
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
         dp = new Integer[n][m];
+        visited = new boolean[n][m];
         maze = new int[n][m];
         for (int i=0; i<n; i++) {
             st = new StringTokenizer(br.readLine());
@@ -49,8 +51,10 @@ public class Main {
                 continue;
             }
 
-            if(maze[nextX][nextY] < maze[startX][startY]) {
+            if (maze[nextX][nextY] < maze[startX][startY]) {
+                visited[nextX][nextY] = true;
                 result += dfs(nextX, nextY);
+                visited[nextX][nextY] = false;
             }
         }
 
