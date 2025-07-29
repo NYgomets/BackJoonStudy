@@ -32,7 +32,7 @@ public class Main {
         }
 
         int result = 0;
-        for (int i=0; i<=n; i++) {
+        for (int i=0; sum+i<=n; i++) {
             result = ((result+check(sum+i, num+1))%MOD);
         }
 
