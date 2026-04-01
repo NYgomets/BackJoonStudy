@@ -9,12 +9,12 @@ public class Main {
     static Integer[][] dp;
     static Node[] nodes;
     static class Node {
-        int weight;
-        int value;
+        int w;
+        int v;
 
-        public Node(int weight, int value) {
-            this.weight = weight;
-            this.value = value;
+        public Node(int w, int v) {
+            this.w = w;
+            this.v = v;
         }
     }
     public static void main(String[] args) throws IOException {
@@ -27,16 +27,17 @@ public class Main {
         nodes = new Node[n];
         for (int i=0; i<n; i++) {
             st = new StringTokenizer(br.readLine());
-            int w = Integer.parseInt(st.nextToken());
-            int v = Integer.parseInt(st.nextToken());
-            nodes[i] = new Node(w, v);
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            nodes[i] = new Node(a, b);
         }
 
-        System.out.println(find(0, 0));
+        int result = dfs(0, 0);
+        System.out.println(result);
     }
 
-    private static int find(int choose, int weight) {
-        if (choose>=n) {
+    private static int dfs(int choose, int weight) {
+        if (choose >= n) {
             return 0;
         }
 
@@ -45,9 +46,10 @@ public class Main {
         }
 
         int max = 0;
-        max = Math.max(max, find(choose+1, weight));
-        if (weight+nodes[choose].weight<=k) {
-            max = Math.max(max, nodes[choose].value+find(choose+1, weight+nodes[choose].weight));
+
+        max = Math.max(max, dfs(choose+1, weight));
+        if (weight + nodes[choose].w <= k) {
+            max = Math.max(max, nodes[choose].v + dfs(choose+1, weight+nodes[choose].w));
         }
 
         dp[choose][weight] = max;
