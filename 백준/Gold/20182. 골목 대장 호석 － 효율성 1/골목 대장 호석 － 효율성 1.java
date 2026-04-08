@@ -54,7 +54,7 @@ public class Main {
     }
 
     private static void dikstra(int start) {
-        Queue<int[]> queue = new LinkedList<>();
+        Queue<int[]> queue = new PriorityQueue<>((o1, o2) -> o1[1] - o2[1]);
         queue.add(new int[]{start, 0, 0});
 
         while (!queue.isEmpty()) {
