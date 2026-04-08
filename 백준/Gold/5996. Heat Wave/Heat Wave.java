@@ -9,7 +9,6 @@ public class Main {
     static int start;
     static int end;
     static int[] shortest;
-    static boolean[] visited;
     static List<Node>[] adjList;
     static class Node {
         int next;
@@ -36,7 +35,6 @@ public class Main {
                 shortest[i] = Integer.MAX_VALUE;
             }
         }
-        visited = new boolean[n+1];
 
         adjList = new ArrayList[n+1];
         for (int i=1; i<=n; i++) {
@@ -59,20 +57,15 @@ public class Main {
     private static void dikstra(int start) {
         Queue<int[]> queue = new PriorityQueue<>((o1, o2) -> o1[1] - o2[1]);
         queue.add(new int[]{start, 0});
-
+        
         while (!queue.isEmpty()) {
             int[] poll = queue.poll();
             int current = poll[0];
-
-            if (visited[current]) {
-                continue;
-            }
-            visited[current] = true;
-
+            
             for (Node node : adjList[current]) {
                 int next = node.next;
                 int cost = node.cost;
-
+                
                 if (shortest[next] > shortest[current] + cost) {
                     shortest[next] = shortest[current] + cost;
                     queue.add(new int[]{next, shortest[next]});
