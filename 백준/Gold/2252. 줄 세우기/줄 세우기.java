@@ -8,7 +8,6 @@ public class Main {
     static int m;
     static List<Integer>[] adjList;
     static int[] digist;
-    static List<Integer> result = new ArrayList<>();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -28,21 +27,22 @@ public class Main {
             digist[b]++;
         }
 
-        while (result.size() < n) {
-            for (int i=1; i<=n; i++) {
-                if (digist[i] == 0) {
-                    result.add(i);
-                    for (int num : adjList[i]) {
-                        digist[num]--;
-                    }
-                    digist[i]--;
-                    break;
-                }
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i=1; i<=n; i++) {
+            if (digist[i] == 0) {
+                queue.add(i);
             }
         }
 
-        for (int i : result) {
-            System.out.print(i + " ");
+        while (!queue.isEmpty()) {
+            int num = queue.poll();
+            System.out.print(num + " ");
+            for (int check : adjList[num]) {
+                digist[check]--;
+                if (digist[check] == 0) {
+                    queue.add(check);
+                }
+            }
         }
     }
 }
