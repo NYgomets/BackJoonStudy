@@ -1,4 +1,4 @@
 -- 코드를 작성해주세요
-select count(*) as FISH_COUNT
-from FISH_INFO
-where TIME LIKE ('%2021%');
+SELECT COUNT(*) AS FISH_COUNT
+FROM FISH_INFO
+WHERE TIME >= '2021/01/01' AND TIME < '2022/01/01';
