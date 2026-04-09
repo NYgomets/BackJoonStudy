@@ -12,11 +12,11 @@
 
 ### 채점결과
 
-Empty
+합계: 100.0 / 100.0
 
 ### 제출 일자
 
-2025년 01월 08일 07:32:49
+2026년 04월 09일 18:22:55
 
 ### 문제 설명
 
@@ -203,12 +203,18 @@ Empty
 </tbody>
       </table>
 <p>상반기 아이스크림 총주문량이 3,000보다 높은 아이스크림 맛은 chocolate, strawberry, melon, white_chocolate입니다. 이 중에 아이스크림의 주 성분이 과일인 아이스크림 맛은 strawberry와 melon이고 총주문량이 큰 순서대로 아이스크림 맛을 조회하면 melon, strawberry 순으로 조회되어야 합니다. 따라서 SQL 문을 실행하면 다음과 같이 나와야 합니다. </p>
-
-<p>| FLAVOR | </p>
-
-<p>|:----|<br>
-| melon |<br>
-| strawberry |</p>
-
+<table class="table">
+        <thead><tr>
+<th style="text-align: left">FLAVOR</th>
+</tr>
+</thead>
+        <tbody><tr>
+<td style="text-align: left">melon</td>
+</tr>
+<tr>
+<td style="text-align: left">strawberry</td>
+</tr>
+</tbody>
+      </table>
 
 > 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
