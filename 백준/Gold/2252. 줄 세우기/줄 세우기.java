@@ -1,48 +1,48 @@
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
 
 public class Main {
+    static int n;
+    static int m;
     static List<Integer>[] adjList;
+    static int[] digist;
+    static List<Integer> result = new ArrayList<>();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
-        int[] arrFirst = new int[n+1]; // 진입차수 배열
-        List<Integer> listSecond = new ArrayList<>(); //위상 정렬
-
-        /**
-         * 인접리스트로 방향 그래프를 표현
-         */
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
         adjList = new ArrayList[n+1];
         for (int i=1; i<=n; i++) {
             adjList[i] = new ArrayList<>();
         }
+        digist = new int[n+1];
+
         for (int i=0; i<m; i++) {
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
             adjList[a].add(b);
-            arrFirst[b]++;
+            digist[b]++;
         }
 
-        while (listSecond.size()<n) {
+        while (result.size() < n) {
             for (int i=1; i<=n; i++) {
-                if (arrFirst[i] == 0) {
-                    listSecond.add(i);
-                    for (int j : adjList[i]) {
-                        arrFirst[j]--;
+                if (digist[i] == 0) {
+                    result.add(i);
+                    for (int num : adjList[i]) {
+                        digist[num]--;
                     }
-                    arrFirst[i]--;
+                    digist[i]--;
                     break;
                 }
             }
         }
 
-        for (int k : listSecond) {
-            System.out.print(k + " ");
+        for (int i : result) {
+            System.out.print(i + " ");
         }
     }
 }
