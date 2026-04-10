@@ -41,20 +41,20 @@ public class Main {
                 inQueue[i] = true;
             }
         }
-        
+
         while (!queue.isEmpty()) {
             int now = queue.poll();
             alive[now] = false;
 
             for (int next : adjList[now]) {
                 indegree[next]--;
-                if (alive[next] && !inQueue[next] && indegree[next] < 2) {
+                if (!inQueue[next] && indegree[next] < 2) {
                     queue.add(next);
                     inQueue[next] = true;
                 }
             }
         }
-        
+
         List<Integer> result = new ArrayList<>();
         for (int i = 1; i <= n; i++) {
             if (alive[i]) {
