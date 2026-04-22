@@ -65,33 +65,41 @@ public class Main {
             int curMirror = poll[2];
             int curPoint = poll[3];
 
-            int ny = curY + dY[curPoint];
-            int nx = curX + dX[curPoint];
+            for (int i=0; i<4; i++) {
+                int nextY = curY + dY[i];
+                int nextX = curX + dX[i];
 
-            while (ny >= 0 && ny < n && nx >= 0 && nx < n && !maze[ny][nx].equals("*")) {
-
-                if (visited[ny][nx][curPoint] > curMirror) {
-                    visited[ny][nx][curPoint] = curMirror;
-                    queue.add(new int[]{ny, nx, curMirror, curPoint});
+                if (nextY<0 || nextY>=n || nextX<0 || nextX>=n) {
+                    continue;
+                }
+                if (maze[nextY][nextX].equals("*")) {
+                    continue;
                 }
 
-                if (maze[ny][nx].equals("!")) {
+                // 직진만
+                if (curPoint == i) {
+                    if (visited[nextY][nextX][curPoint] > curMirror) {
+                        visited[nextY][nextX][curPoint] = curMirror;
+                        queue.add(new int[]{nextY, nextX, visited[nextY][nextX][curPoint], curPoint});
+                    }
+                }
+
+                // 방향전환
+                if (maze[nextY][nextX].equals("!") && curPoint == i) {
+
                     int left = (curPoint + 3) % 4;
                     int right = (curPoint + 1) % 4;
 
-                    if (visited[ny][nx][left] > curMirror + 1) {
-                        visited[ny][nx][left] = curMirror + 1;
-                        queue.add(new int[]{ny, nx, curMirror + 1, left});
+                    if (visited[nextY][nextX][left] > curMirror + 1) {
+                        visited[nextY][nextX][left] = curMirror + 1;
+                        queue.add(new int[]{nextY, nextX, visited[nextY][nextX][left], left});
                     }
 
-                    if (visited[ny][nx][right] > curMirror + 1) {
-                        visited[ny][nx][right] = curMirror + 1;
-                        queue.add(new int[]{ny, nx, curMirror + 1, right});
+                    if (visited[nextY][nextX][right] > curMirror + 1) {
+                        visited[nextY][nextX][right] = curMirror + 1;
+                        queue.add(new int[]{nextY, nextX, visited[nextY][nextX][right], right});
                     }
                 }
-
-                ny += dY[curPoint];
-                nx += dX[curPoint];
             }
         }
     }
