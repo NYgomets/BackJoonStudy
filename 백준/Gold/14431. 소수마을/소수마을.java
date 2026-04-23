@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Main {
@@ -57,11 +55,15 @@ public class Main {
 
         dikstra();
 
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         if (shortest[village+1] == Integer.MAX_VALUE) {
-            System.out.println(-1);
+            bw.write("-1");
         } else {
-            System.out.println(shortest[village+1]);
+            bw.write(String.valueOf(shortest[village+1]));
         }
+
+        bw.flush();
+        bw.close();
     }
 
     private static int distance(int sX, int sY, int eX, int eY) {
