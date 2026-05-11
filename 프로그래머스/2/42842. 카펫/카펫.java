@@ -1,15 +1,24 @@
 class Solution {
     public int[] solution(int brown, int yellow) {
         int total = brown+yellow;
-        for (int i=3; i<=total; i++) {
-            int width = total/i;
-            if (width>=i) {
-                if ((i-2)*(width-2) == yellow) {
-                    return new int[]{width, i};
+        
+        int y = 0;
+        int x = 0;
+        for (int i=1; i<=total; i++) {
+            if (total%i == 0) {
+                int j = total/i;
+                if (i >= j) {
+                  int yi = i-2;
+                  int yj = j-2;
+                  if (yi*yj == yellow) {
+                      y = i;
+                      x = j;
+                      break;
+                  }
                 }
             }
         }
         
-        return new int[]{0};
+        return new int[]{y, x};
     }
 }
