@@ -11,8 +11,9 @@ class Solution {
         }
     }
     public int solution(String[][] book_time) {
-        Node[] nodes = new Node[book_time.length];
-        for (int i=0; i<book_time.length; i++) {
+        int n = book_time.length;
+        Node[] nodes = new Node[n];
+        for (int i=0; i<n; i++) {
             String[] first = book_time[i][0].split(":");
             String[] second = book_time[i][1].split(":");
             
@@ -27,7 +28,7 @@ class Solution {
         Queue<Integer> queue = new PriorityQueue<>();
         queue.add(nodes[0].end);
         
-        for (int i=1; i<book_time.length; i++) {
+        for (int i=1; i<n; i++) {
             if (nodes[i].start >= queue.peek()) {
                 queue.poll();
                 queue.add(nodes[i].end);
